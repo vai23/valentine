@@ -3,226 +3,230 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💕</title>
+<title>A Surprise For You ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
-    height: 100vh;
-    background: linear-gradient(135deg, #ffd1dc, #ffe6f0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-    color: #ff4d6d;
-    transition: 0.3s;
+  font-family:'Montserrat', sans-serif;
+  background: linear-gradient(to bottom, #fff1f2, #ffe4e6);
+  overflow:hidden;
+  color:#8b3b4a;
+  text-align:center;
 }
 
-.container {
-    padding: 20px;
-    max-width: 90%;
+/* Dreamy Blobs */
+.blob {
+  position:absolute;
+  width:250px;
+  height:250px;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:.5;
+  animation:float 10s ease-in-out infinite alternate;
+}
+.blob1 { background:#ff4d6d; top:10%; left:10%; }
+.blob2 { background:#ff99ac; top:60%; right:10%; }
+.blob3 { background:#ffc2d1; bottom:10%; left:40%; }
+
+@keyframes float {
+  from { transform:translateY(0px); }
+  to { transform:translateY(-40px); }
 }
 
-h1 {
-    font-size: 1.8rem;
-    min-height: 60px;
+/* HERO */
+.hero {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  position:relative;
+}
+
+.hero h1 {
+  font-family:'Great Vibes', cursive;
+  font-size:4rem;
+  margin-bottom:20px;
+}
+
+.hero p {
+  max-width:600px;
+  font-size:1.2rem;
+  line-height:1.8;
+}
+
+/* PROPOSAL */
+.proposal {
+  position:absolute;
+  bottom:80px;
+  width:100%;
+}
+
+.proposal h2 {
+  font-family:'Great Vibes', cursive;
+  font-size:3rem;
+  margin-bottom:30px;
+}
+
+.buttons {
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  align-items:center;
 }
 
 button {
-    padding: 14px 28px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 40px;
-    margin: 10px;
-    cursor: pointer;
-    transition: 0.2s ease;
+  border:none;
+  border-radius:50px;
+  padding:16px 40px;
+  font-size:1.2rem;
+  cursor:pointer;
+  transition:.2s;
+  min-width:220px;
 }
 
+/* YES */
 #yesBtn {
-    background: #ff4d6d;
-    color: white;
+  background:linear-gradient(180deg,#ff4d6d,#d90429);
+  color:white;
+  box-shadow:0 10px 25px rgba(242,13,51,0.4);
 }
 
+/* NO */
 #noBtn {
-    background: white;
-    color: #ff4d6d;
-    position: absolute;
+  background:linear-gradient(180deg,#ffd6de,#f8b9c6);
+  color:#8b3b4a;
+  position:relative;
 }
 
-#finalMessage {
-    margin-top: 20px;
-    font-size: 1.4rem;
-}
-
-/* Floating hearts */
-.heart {
-    position: fixed;
-    animation: floatUp 5s linear infinite;
-}
-
-@keyframes floatUp {
-    from { transform: translateY(100vh); opacity: 1; }
-    to { transform: translateY(-10vh); opacity: 0; }
-}
-
-/* Confetti fall */
-@keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(720deg);
-        opacity: 0;
-    }
-}
-
-/* Screen shake */
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    50% { transform: translateX(8px); }
-    75% { transform: translateX(-8px); }
-    100% { transform: translateX(0); }
-}
-
-/* Firework particle */
-.firework {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #ff4d6d;
-    pointer-events: none;
+/* Confetti */
+.confetti {
+  position:fixed;
+  width:8px;
+  height:14px;
+  top:50%;
+  left:50%;
+  opacity:1;
+  pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1 id="typing"></h1>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
 
-    <div id="buttons" style="display:none;">
-        <button id="yesBtn">Yes 💕</button>
-        <button id="noBtn">No 🥺</button>
-    </div>
+<section class="hero">
+  <h1>Hey You...</h1>
+  <p>
+    Every day with you feels like a dream come true.
+    You’ve filled my life with love, laughter, and joy.
+    I made this little corner of the internet
+    just to tell you something important...
+  </p>
+</section>
 
-    <div id="finalMessage"></div>
-</div>
+<section class="proposal">
+  <h2>Will you be my Valentine?</h2>
+
+  <div class="buttons">
+    <button id="yesBtn">YES! ❤️</button>
+    <button id="noBtn">No</button>
+  </div>
+</section>
 
 <script>
-const text = "Hey Girl… I’ve been meaning to ask you something… 💭";
-let i = 0;
-const typingElement = document.getElementById("typing");
-const buttons = document.getElementById("buttons");
-
-function typeEffect() {
-    if (i < text.length) {
-        typingElement.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeEffect, 60);
-    } else {
-        setTimeout(() => {
-            typingElement.innerHTML = "Will you be my Valentine? 💖";
-            buttons.style.display = "block";
-        }, 800);
-    }
-}
-typeEffect();
-
-/* Floating hearts */
-setInterval(() => {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-}, 800);
-
-/* Move NO button */
 const noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("touchstart", moveButton);
-noBtn.addEventListener("mouseover", moveButton);
+
+const funnyTexts = [
+  "Are you sure? 🥺",
+  "Think again 😏",
+  "That was risky…",
+  "Wrong answer 😂",
+  "Try that again?",
+  "You sure about that? 👀",
+  "Be serious right now.",
+  "That hurt a little 😢",
+  "I don’t think so 😌",
+  "Nice try.",
+  "This button is broken.",
+  "It won’t work anyway.",
+  "Don’t do this to me.",
+  "Bold choice…",
+  "Error 404: No not allowed.",
+  "Suspicious decision.",
+  "That’s illegal 🚨",
+  "Hmm… reconsider?",
+  "Press YES instead 😇",
+  "You can’t escape fate."
+];
+
+let lastIndex = -1;
 
 function moveButton() {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+  const x = Math.random() * 300 - 150;
+  const y = Math.random() * 200 - 100;
+
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+  let newIndex;
+  do {
+    newIndex = Math.floor(Math.random() * funnyTexts.length);
+  } while (newIndex === lastIndex);
+
+  lastIndex = newIndex;
+  noBtn.innerText = funnyTexts[newIndex];
 }
 
-/* YES BUTTON MAGIC */
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+/* CONFETTI CANNON */
 const yesBtn = document.getElementById("yesBtn");
 
 yesBtn.addEventListener("click", () => {
 
-    document.getElementById("finalMessage").innerHTML =
-        "YOU JUST MADE ME THE HAPPIEST PERSON ALIVE 😭💖✨";
+  const colors = ["#ff4d6d","#ff99ac","#ffc2d1","#ff758f","#d90429"];
 
-    // Screen shake
-    document.body.style.animation = "shake 0.5s ease-in-out 2";
+  for (let i = 0; i < 150; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
 
-    // Mobile vibration (works on supported devices)
-    if (navigator.vibrate) {
-        navigator.vibrate([200, 100, 200]);
-    }
+    confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
 
-    // Massive confetti rain
-    for (let i = 0; i < 200; i++) {
-        const confetti = document.createElement("div");
-        const emojis = ["💖", "✨", "🎉", "💕", "💘", "🌸"];
-        confetti.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-        confetti.style.position = "fixed";
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.top = "-10px";
-        confetti.style.fontSize = (Math.random() * 25 + 15) + "px";
-        confetti.style.animation = "fall 4s linear forwards";
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 4000);
-    }
+    document.body.appendChild(confetti);
 
-    launchFireworks();
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * 600;
+
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    confetti.animate([
+      { transform: "translate(-50%, -50%) scale(1)", opacity:1 },
+      { transform: `translate(${x}px, ${y}px) rotate(${Math.random()*720}deg)`, opacity:0 }
+    ], {
+      duration: 1500,
+      easing: "ease-out"
+    });
+
+    setTimeout(() => confetti.remove(), 1500);
+  }
+
+  setTimeout(() => {
+    document.body.innerHTML = `
+    <div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#ffe4e6;">
+      <h1 style="font-family:'Great Vibes', cursive;font-size:4rem;color:#d90429;">You just made me the happiest person alive ❤️</h1>
+    </div>`;
+  }, 1200);
 });
-
-/* FIREWORK BURST FROM CENTER */
-function launchFireworks() {
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-
-    for (let i = 0; i < 80; i++) {
-        const particle = document.createElement("div");
-        particle.classList.add("firework");
-
-        const angle = Math.random() * 2 * Math.PI;
-        const distance = Math.random() * 200 + 100;
-
-        const x = centerX + Math.cos(angle) * distance;
-        const y = centerY + Math.sin(angle) * distance;
-
-        particle.style.left = centerX + "px";
-        particle.style.top = centerY + "px";
-        particle.style.background =
-            `hsl(${Math.random() * 360}, 100%, 60%)`;
-
-        document.body.appendChild(particle);
-
-        particle.animate([
-            { transform: "translate(0,0)", opacity: 1 },
-            { transform: `translate(${x - centerX}px, ${y - centerY}px)`, opacity: 0 }
-        ], {
-            duration: 1200,
-            easing: "ease-out"
-        });
-
-        setTimeout(() => particle.remove(), 1200);
-    }
-}
 </script>
 
 </body>
